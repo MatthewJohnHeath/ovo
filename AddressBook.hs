@@ -1,6 +1,7 @@
-
-module AddressBook (Gender, AddressBookEntry, AddressBook) where
+module AddressBook (Gender, AddressBookEntry) where
 import Data.Time
+import Data.Maybe
+import Data.List.Split
 
 data Gender = 
 	Male |Female
@@ -14,7 +15,7 @@ data  AddressBookEntry = AddressBookEntry
 		date		:: Day
 	} deriving(Eq)
 
-data AddressBook = List AddressBookEntry
+
 
 parseGender :: String -> Maybe Gender
 parseGender "Male" = Just Male
@@ -29,9 +30,8 @@ fillVals [fn, ln, gen, d] =
 	AddressBookEntry fn ln <$> (parseGender gen) <*> (parseDay d)
 fillVals _ = Nothing	
 
--- parseLine :: String ->  Maybe AddressBookEntry
-	-- AddressBook <*> values!!0 
+parseLine :: String ->  Maybe AddressBookEntry
+parseLine = fillVals . (splitOn ",")
 
-
--- parseAddressBook :: String -> AddressBook 
--- parseAddressBook file
+parseAddressBook :: String -> [AddressBookEntry] 
+parseAddressBook string = catMaybes (map parseLine (lines string ) ) 
