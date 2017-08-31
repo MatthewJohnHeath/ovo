@@ -32,8 +32,11 @@ parseDay  = parseTime defaultTimeLocale "%d%m%Y"
 
 --Turns strings for the fields values into an address book entry
 fillVals :: [String] -> Maybe AddressBookEntry
-fillVals [fn, ln, gen, d] =
-    AddressBookEntry fn ln <$> (parseGender gen) <*> (parseDay d)
+fillVals [fnln, gen, d] =
+    case words fnln of
+    [fn, ln]->
+        AddressBookEntry fn ln <$> (parseGender gen) <*> (parseDay d)
+    _ -> Nothing
 fillVals _ = Nothing    
 
 --Turns line of an address book file into an AddressBookEntry
