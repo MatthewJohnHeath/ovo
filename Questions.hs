@@ -11,12 +11,12 @@ eldest :: AddressBook -> String
 eldest book = 
     firstName entry ++ " " ++ lastName entry
     where
-        entry = maximumBy (comparing date) book
+        entry = minimumBy (comparing date) book
     
 
 ageDifference :: AddressBook -> Maybe Integer
 ageDifference book = 
-    diffDays <$>(dateFor "Bill") <*> (dateFor "Paul") 
+    diffDays <$>(dateFor "Paul") <*> (dateFor "Bill") 
     where
         dateFor name = date <$> ( find ((==)name . firstName) book )
 
