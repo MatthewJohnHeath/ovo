@@ -1,4 +1,4 @@
-module Questions (questions) where
+module Questions (countMales, eldest,  ageDifferenceString) where
 import AddressBook
 import Data.Time
 import Data.List
